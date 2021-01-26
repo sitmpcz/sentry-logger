@@ -7,8 +7,6 @@
     },
     "minimum-stability": "dev",    
     "autoload": {
-        "psr-4": {
-            "Sitmpcz\\SentryLogger\\": "src/"
-        }
-    }
+		"classmap": ["src/"]
+    }     
 }
