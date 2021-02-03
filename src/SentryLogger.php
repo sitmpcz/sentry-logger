@@ -10,18 +10,26 @@
 
 namespace Sitmpcz;
 
-use Tracy\ILogger;
-use Sentry;
+use Tracy\ILogger,
+    Tracy\Dumper,
+    Nette\Security\User,
+    Nette\Http\Session,
+    Nette\Http\Request,
+    Sentry;
 
 class SentryLogger implements ILogger
 {
-    /** @var string[] */
-    private $allowedPriority = [ILogger::ERROR, ILogger::EXCEPTION, ILogger::CRITICAL];
+    private array $allowedPriority = [ILogger::ERROR, ILogger::EXCEPTION, ILogger::CRITICAL];
+    private bool $ready = false;
+    private User $user;
+    private Session $session;
+    private Request $request;
 
-    private $ready = false;
-
-    public function __construct(string $url = '')
+    public function __construct(string $url = '',User $user, Session $session, Request $request)
     {
+        $this->user = $user;
+        $this->session = $session;
+        $this->request = $request;
         if ($url != '') {
             // is registration OK?
             try {
@@ -40,8 +48,37 @@ class SentryLogger implements ILogger
             if (!in_array($priority, $this->allowedPriority, true)) {
                 return;
             }
-            Sentry\captureException($value);
-            //\Sentry\captureMessage($value);
+            Sentry\configureScope(function (Sentry\State\Scope $scope): void {
+                // add user info into scope if available
+                if ($this->user->isLoggedIn()) {
+                    $userFields = ['id' => $this->user->getIdentity()->getId()];
+                    // give other user data?
+                    foreach ($this->user->getIdentity()->data as $key => $item) {
+                        if (in_array(gettype($item),["string","integer"])) $userFields[$key] = $item;
+                    }
+                    $scope->setUser($userFields);
+                }
+                // add session info  into scope if available
+                if ($this->session) {
+                    $data = [];
+                    foreach ($this->session->getIterator() as $section) {
+                        foreach ($this->session->getSection($section)->getIterator() as $key => $val) {
+                            $data[$section][$key] = $val;
+                        }
+                    }
+                    $scope->setExtra('session', $data);
+                }
+                if (isset($_SERVER['HTTP_X_REAL_IP'])) {
+                    $scope->setExtra('IP', $_SERVER['HTTP_X_REAL_IP']);
+                } else {
+                    if ($this->httpRequest) $scope->setExtra('IP', $this->httpRequest->getRemoteAddress());
+                }
+            });
+            if ($value instanceof Throwable) {
+                Sentry\captureException($value);
+            } else {
+                Sentry\captureMessage(is_string($value) ? $value : Dumper::toText($value));
+            }
         }
     }
 }
