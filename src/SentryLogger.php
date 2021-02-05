@@ -15,6 +15,7 @@ use Tracy\ILogger,
     Nette\Security\User,
     Nette\Http\Session,
     Nette\Http\Request,
+    Throwable,
     Sentry;
 
 class SentryLogger implements ILogger
