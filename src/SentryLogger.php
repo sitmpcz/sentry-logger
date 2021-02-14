@@ -26,7 +26,7 @@ class SentryLogger implements ILogger
     private Session $session;
     private Request $request;
 
-    public function __construct(string $url = '',User $user, Session $session, Request $request)
+    public function __construct(string $url ,User $user, Session $session, Request $request)
     {
         $this->user = $user;
         $this->session = $session;
