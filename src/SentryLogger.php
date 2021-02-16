@@ -72,7 +72,7 @@ class SentryLogger implements ILogger
                 if (isset($_SERVER['HTTP_X_REAL_IP'])) {
                     $scope->setExtra('IP', $_SERVER['HTTP_X_REAL_IP']);
                 } else {
-                    if ($this->httpRequest) $scope->setExtra('IP', $this->httpRequest->getRemoteAddress());
+                    if ($this->request) $scope->setExtra('IP', $this->request->getRemoteAddress());
                 }
             });
             if ($value instanceof Throwable) {
