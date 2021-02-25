@@ -12,6 +12,7 @@ namespace Sitmpcz;
 
 use Tracy\ILogger,
     Tracy\Dumper,
+    Tracy\Debugger,
     Nette\Security\User,
     Nette\Http\Session,
     Nette\Http\Request,
@@ -31,7 +32,8 @@ class SentryLogger implements ILogger
         $this->user = $user;
         $this->session = $session;
         $this->request = $request;
-        if ($url != '') {
+        // log only in production
+        if (($url != '') && (Debugger::$productionMode)) {
             // is registration OK?
             try {
                 Sentry\init(['dsn' => $url]);
