@@ -36,7 +36,11 @@ class SentryLogger implements ILogger
         if (($url != '') && (Debugger::$productionMode)) {
             // is registration OK?
             try {
-                Sentry\init(['dsn' => $url]);
+                // how to parametrize traces_sample_rate without changes in __construct syntax?
+                Sentry\init([
+                    'dsn' => $url,
+                    'traces_sample_rate' => 0.1
+                ]);
                 $this->ready = true;
             } catch (Exception $e) {
                 // what now?
