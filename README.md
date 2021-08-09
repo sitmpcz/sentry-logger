@@ -10,11 +10,11 @@ Sentry event logger usage
 
 2) in config neon add in section parameters
 
-sentry_url: https://something@abc.sentry.io/someproject
+> sentry_url: https://something@abc.sentry.io/someproject
 
 3) in config neon add in section services
 
-tracy.logger: Sitmpcz\SentryLogger(%sentry_url%)
+> tracy.logger: Sitmpcz\SentryLogger(%sentry_url%)
 
 --------------------------------------------------------------
 Sentry performance usage (optional)
