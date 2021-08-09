@@ -3,6 +3,8 @@
 install:
 composer require sitmpcz/sentry-logger
 
+Sentry event logger
+--------
 in config neon add:
 1) in section parameters
 
