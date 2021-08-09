@@ -35,5 +35,6 @@ function shutdown(Nette\Application\Response $response): void
 {
    parent::shutdown($response);
    if ($this->sentryPerformance) Sitmpcz\SentryPerformance::endPerformaceMonitoring($this->sentryPerformance);
-}```
+}
+```
 
