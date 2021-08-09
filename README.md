@@ -6,7 +6,7 @@ composer require sitmpcz/sentry-logger
 
 Sentry event logger usage
 --------
-1} run Sentry, register your project and get client DSN url 
+1) run Sentry, register your project and get client DSN url 
 
 2) in config neon add in section parameters
 
