@@ -26,23 +26,14 @@ Example for Nette - BasePresenter:
 private ?object $sentryPerformance = null;
 
 function startup(): void
-
 {
-
    parent::startup();
-  
    $this->sentryPerformance = Sitmpcz\SentryPerformance::startPerformaceMonitoring($this->getName(), $this->getAction());
-  
 }
 
-
 function shutdown(Nette\Application\Response $response): void
-
 {
-
    parent::shutdown($response);
-  
    if ($this->sentryPerformance) Sitmpcz\SentryPerformance::endPerformaceMonitoring($this->sentryPerformance);
-  
 }```
 
