@@ -28,9 +28,9 @@ function startup(): void
 
 {
 
-  parent::startup();
+   parent::startup();
   
-  $this->sentryPerformance = Sitmpcz\SentryPerformance::startPerformaceMonitoring($this->getName(), $this->getAction());
+   $this->sentryPerformance = Sitmpcz\SentryPerformance::startPerformaceMonitoring($this->getName(), $this->getAction());
   
 }
 
@@ -39,9 +39,9 @@ function shutdown(Nette\Application\Response $response): void
 
 {
 
-  parent::shutdown($response);
+   parent::shutdown($response);
   
-  if ($this->sentryPerformance) Sitmpcz\SentryPerformance::endPerformaceMonitoring($this->sentryPerformance);
+   if ($this->sentryPerformance) Sitmpcz\SentryPerformance::endPerformaceMonitoring($this->sentryPerformance);
   
 }
 
