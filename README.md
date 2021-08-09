@@ -20,8 +20,9 @@ tracy.logger: Sitmpcz\SentryLogger(%sentry_url%)
 Sentry performance usage (optional)
 --------
 
-Example for Nette - BasePresenter
+Example for Nette - BasePresenter:
 
+```php
 private ?object $sentryPerformance = null;
 
 function startup(): void
@@ -43,5 +44,5 @@ function shutdown(Nette\Application\Response $response): void
   
    if ($this->sentryPerformance) Sitmpcz\SentryPerformance::endPerformaceMonitoring($this->sentryPerformance);
   
-}
+}```
 
