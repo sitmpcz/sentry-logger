@@ -6,12 +6,13 @@ composer require sitmpcz/sentry-logger
 
 Sentry event logger usage
 --------
-in config neon add:
-1) in section parameters
+1} run Sentry, register your project and get client DSN url 
+
+2) in config neon add in section parameters
 
 sentry_url: https://something@abc.sentry.io/someproject
 
-2) in section services
+3) in config neon add in section services
 
 tracy.logger: Sitmpcz\SentryLogger(%sentry_url%)
 
