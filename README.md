@@ -14,6 +14,7 @@ tracy.logger: Sitmpcz\SentryLogger(%sentry_url%)
 
 --------------------------------------------------------------
 Sentry performance usage (optional)
+--------
 
 Example for Nette - BasePresenter
 
