@@ -20,12 +20,15 @@ Manual write to Sentry Error log
 --------
 Using  DI load Sentry Logger 
 Example for presenter
+```php
 /** @var \Sitmpcz\SentryLogger @inject */
 public \Sitmpcz\SentryLogger $sentryLogger;
+```
 
 Then you can write error to Sentry manually:
+```php
 $this->sentryLogger->log(new \Exception("test sentry"),\Tracy\ILogger::ERROR);
-
+```
 
 --------------------------------------------------------------
 Sentry performance usage (optional)
