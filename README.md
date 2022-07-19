@@ -16,6 +16,17 @@ Sentry event logger usage
 
 > tracy.logger: Sitmpcz\SentryLogger(%sentry_url%)
 
+Manual write to Sentry Error log
+--------
+Using  DI load Sentry Logger 
+Example for presenter
+/** @var \Sitmpcz\SentryLogger @inject */
+public \Sitmpcz\SentryLogger $sentryLogger;
+
+Then you can write error to Sentry manually:
+$this->sentryLogger->log(new \Exception("test sentry"),\Tracy\ILogger::ERROR);
+
+
 --------------------------------------------------------------
 Sentry performance usage (optional)
 --------
