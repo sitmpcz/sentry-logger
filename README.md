@@ -30,6 +30,13 @@ Then you can write error to Sentry manually:
 $this->sentryLogger->log(new \Exception("test sentry"),\Tracy\ILogger::ERROR);
 ```
 
+If you want to write to log manually, you can use Tracy\Debugger::log too, but you must specify higher priority (Napr CRITICAL)
+Example
+```php
+\Tracy\Debugger::log("Test zapistu do logu",\Tracy\ILogger::CRITICAL);
+```
+
+
 --------------------------------------------------------------
 Sentry performance usage (optional)
 --------
