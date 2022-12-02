@@ -24,13 +24,11 @@ class SentryLogger implements ILogger
     private array $allowedPriority = [ILogger::ERROR, ILogger::EXCEPTION, ILogger::CRITICAL];
     private bool $ready = false;
     private User $user;
-    private Session $session;
     private Request $request;
 
-    public function __construct(string $url ,User $user, Session $session, Request $request)
+    public function __construct(string $url ,User $user, Request $request)
     {
         $this->user = $user;
-        $this->session = $session;
         $this->request = $request;
         // log only in production
         if (($url != '') && (Debugger::$productionMode)) {
@@ -66,12 +64,16 @@ class SentryLogger implements ILogger
                     $scope->setUser($userFields);
                 }
                 // add session info  into scope if available
-                if ($this->session) {
+                if (session_status() === PHP_SESSION_ACTIVE) {
                     $data = [];
-                    foreach ($this->session->getIterator() as $section) {
-                        foreach ($this->session->getSection($section)->getIterator() as $key => $val) {
-                            $data[$section][$key] = $val;
+                    foreach ($_SESSION as $k => $v) {
+                        if ($k === '__NF') {
+                            $k = 'Nette Session';
+                            $v = $v['DATA'] ?? null;
+                        } elseif ($k === '_tracy') {
+                            continue;
                         }
+                        $data[$k] = $v;
                     }
                     $scope->setExtra('session', $data);
                 }
