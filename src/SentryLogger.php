@@ -11,6 +11,7 @@
 namespace Sitmpcz;
 
 use Tracy\ILogger,
+    Tracy\Logger,
     Tracy\Dumper,
     Tracy\Debugger,
     Nette\Security\User,
