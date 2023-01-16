@@ -19,7 +19,7 @@ use Tracy\ILogger,
     Throwable,
     Sentry;
 
-class SentryLogger implements ILogger
+class SentryLogger extends Logger implements ILogger
 {
     private array $allowedPriority = [ILogger::ERROR, ILogger::EXCEPTION, ILogger::CRITICAL];
     private bool $ready = false;
