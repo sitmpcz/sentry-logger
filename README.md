@@ -13,8 +13,15 @@ Sentry event logger usage
 > sentry_url: https://something@abc.sentry.io/someproject
 
 3) in config neon add in section services
-
+a) simple version
 > tracy.logger: Sitmpcz\SentryLogger(%sentry_url%)
+
+b) extended version - use additional attributes (example with release attribute)
+>tracy.logger:
+>		create: Sitmpcz\SentryLogger(%sentry_url%)
+>		setup:
+>			- setAttribute('release', 'myApp@1.8.0')
+
 
 Manual write to Sentry Error log
 --------
