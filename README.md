@@ -14,6 +14,7 @@ sentry_url: https://something@abc.sentry.io/someproject
 ```
 
 3) in config neon add in section services
+
 a) simple version
 ```neon
 tracy.logger: Sitmpcz\SentryLogger(%sentry_url%)
