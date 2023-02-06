@@ -9,19 +9,23 @@ Sentry event logger usage
 1) run Sentry, register your project and get client DSN url 
 
 2) in config neon add in section parameters
-
-> sentry_url: https://something@abc.sentry.io/someproject
+```neon
+sentry_url: https://something@abc.sentry.io/someproject
+```
 
 3) in config neon add in section services
 a) simple version
-> tracy.logger: Sitmpcz\SentryLogger(%sentry_url%)
+```neon
+tracy.logger: Sitmpcz\SentryLogger(%sentry_url%)
+```
 
 b) extended version - use additional attributes (example with release attribute)
->tracy.logger:
->		create: Sitmpcz\SentryLogger(%sentry_url%)
->		setup:
->			- setAttribute('release', 'myApp@1.8.0')
-
+```neon
+tracy.logger:
+	create: Sitmpcz\SentryLogger(%sentry_url%)
+	setup:
+		- setAttribute('release', 'myApp@1.8.0')
+```
 
 Manual write to Sentry Error log
 --------
