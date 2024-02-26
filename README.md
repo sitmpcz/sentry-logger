@@ -26,6 +26,7 @@ tracy.logger:
 	create: Sitmpcz\SentryLogger(%sentry_url%)
 	setup:
 		- setAttribute('release', 'myApp@1.8.0')
+		- setAttribute('environment', 'production')
 ```
 
 Manual write to Sentry Error log
