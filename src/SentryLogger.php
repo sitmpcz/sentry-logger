@@ -26,19 +26,21 @@ class SentryLogger extends Logger implements ILogger
     private bool $ready = false;
     private User $user;
     private Request $request;
+    private string $url;
     private array $attributes = [];
 
     public function __construct(string $url ,User $user, Request $request)
     {
         $this->user = $user;
         $this->request = $request;
+        $this->url = $url;
         // log only in production
-        if (($url != '') && (Debugger::$productionMode)) {
+        if (($this->url != '') && (Debugger::$productionMode)) {
             // is registration OK?
             try {
                 // how to parametrize traces_sample_rate without changes in __construct syntax? - via setup and setAttribute
                 Sentry\init(array_merge([
-                    'dsn' => $url,
+                    'dsn' => $this->url,
                     'traces_sample_rate' => 0.1
                 ],$this->attributes));
                 $this->ready = true;
@@ -53,6 +55,20 @@ class SentryLogger extends Logger implements ILogger
     public function setAttribute(string $name,mixed $value)
     {
         $this->attributes[$name] = $value;
+        // fuj fuj - init for every new attribute :-(
+        if (($this->url != '') && (Debugger::$productionMode)) {
+            // is registration OK?
+            try {
+                // how to parametrize traces_sample_rate without changes in __construct syntax? - via setup and setAttribute
+                Sentry\init(array_merge([
+                    'dsn' => $this->url,
+                    'traces_sample_rate' => 0.1
+                ],$this->attributes));
+                $this->ready = true;
+            } catch (Exception $e) {
+                // what now?
+            }
+        }
     }    
 
     public function log($value, $priority = ILogger::INFO)
