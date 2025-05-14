@@ -15,14 +15,14 @@ use Tracy\ILogger,
     Tracy\Dumper,
     Tracy\Debugger,
     Nette\Security\User,
-    Nette\Http\Session,
     Nette\Http\Request,
     Throwable,
+    Exception,
     Sentry;
 
 class SentryLogger extends Logger implements ILogger
 {
-    private array $allowedPriority = [ILogger::ERROR, ILogger::EXCEPTION, ILogger::CRITICAL];
+    private array $allowedLevel = [ILogger::ERROR, ILogger::EXCEPTION, ILogger::CRITICAL];
     private bool $ready = false;
     private User $user;
     private Request $request;
@@ -71,10 +71,10 @@ class SentryLogger extends Logger implements ILogger
         }
     }    
 
-    public function log($value, $priority = ILogger::INFO)
+    public function log($value, $level = ILogger::INFO)
     {
         if ($this->ready) {
-            if (!in_array($priority, $this->allowedPriority, true)) {
+            if (!in_array($level, $this->allowedLevel, true)) {
                 return;
             }
             Sentry\configureScope(function (Sentry\State\Scope $scope): void {
