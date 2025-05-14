@@ -5,7 +5,7 @@
         "php": ">=8.0",
         "sentry/sentry": ">=4.0"
     },
-    "minimum-stability": "dev",    
+    "minimum-stability": "stable",
     "autoload": {
 		"classmap": ["src/"]
     }     
