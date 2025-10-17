@@ -83,7 +83,10 @@ class SentryLogger extends Logger implements ILogger
                     $userFields = ['id' => $this->user->getIdentity()->getId()];
                     // give other user data?
                     foreach ($this->user->getIdentity()->data as $key => $item) {
-                        if (in_array(gettype($item),["string","integer"])) $userFields[$key] = $item;
+                        // Sentry userDataBag->setMetadata expects $key to be string
+                        if ((is_string($key)) and (in_array(gettype($item),["string","integer"]))) {
+                            $userFields[$key] = $item;
+                        }
                     }
                     $scope->setUser($userFields);
                 }
